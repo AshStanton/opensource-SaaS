@@ -1,12 +1,12 @@
-// import { PRIVATE_STRIPE_API_KEY } from "$env/static/private"
+import { PRIVATE_STRIPE_API_KEY } from "$env/static/private"
 import { error, redirect } from "@sveltejs/kit"
-// import Stripe from "stripe"
+import Stripe from "stripe"
 import {
   fetchSubscription,
   getOrCreateCustomerId,
 } from "../../subscription_helpers.server"
 import type { PageServerLoad } from "./$types"
-// const stripe = new Stripe(PRIVATE_STRIPE_API_KEY, { apiVersion: "2023-08-16" })
+const stripe = new Stripe(PRIVATE_STRIPE_API_KEY, { apiVersion: "2023-08-16" })
 
 export const load: PageServerLoad = async ({
   params,
@@ -42,7 +42,7 @@ export const load: PageServerLoad = async ({
     redirect(303, "/account/billing")
   }
 
-  /* let checkoutUrl
+  let checkoutUrl
   try {
     const stripeSession = await stripe.checkout.sessions.create({
       line_items: [
@@ -62,5 +62,5 @@ export const load: PageServerLoad = async ({
     error(500, "Unknown Error (SSE): If issue persists please contact us.")
   }
 
-  redirect(303, checkoutUrl ?? "/pricing") */
+  redirect(303, checkoutUrl ?? "/pricing")
 }
